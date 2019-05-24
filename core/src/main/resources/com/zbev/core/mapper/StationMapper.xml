@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zbev.core.mapper.StationMapper">
+
+    <resultMap id="stationResult" type="Station">
+        <result column="stationId" property="stationId"/>
+        <result column="companyCode" property="companyCode"/>
+        <result column="ownerType" property="ownerType"/>
+        <result column="stationName" property="stationName"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="stationStatus" property="stationStatus"/>
+        <result column="allowSearch" property="allowSearch"/>
+        <result column="elecFeeModelId" property="elecFeeModelId"/>
+        <result column="parkFeeModelId" property="parkFeeModelId"/>
+        <result column="location" property="location"/>
+        <result column="contact" property="contact"/>
+        <result column="contactPhoneNum" property="contactPhoneNum"/>
+        <result column="maintainer" property="maintainer"/>
+        <result column="maintainerPhoneNum" property="maintainerPhoneNum"/>
+        <result column="createTime" property="createTime"/>
+        <result column="platformCompanyCode" property="platformCompanyCode"/>
+        <result column="bookStrategyId" property="bookStrategyId"/>
+        <result column="closeOrderStrategy" property="closeOrderStrategy"/>
+        <result column="stationStatisticStrategy" property="stationStatisticStrategy"/>
+        <result column="smsWarningNotice" property="smsWarningNotice"/>
+        <result column="wechatWarningNotice" property="wechatWarningNotice"/>
+        <result column="smsErrorNotice" property="smsErrorNotice"/>
+        <result column="wechatErrorNotice" property="wechatErrorNotice"/>
+        <result column="test" property="test"/>
+        <result column="imageId" property="imageId"/>
+    </resultMap>
+
+    <sql id="stationColumn">
+        stationId,companyCode,ownerType,stationName,latitude,longitude,stationStatus,allowSearch,elecFeeModelId,parkFeeModelId,location,contact,contactPhoneNum,maintainer,maintainerPhoneNum,createTime,platformCompanyCode,bookStrategyId,closeOrderStrategy,stationStatisticStrategy,smsWarningNotice,wechatWarningNotice,smsErrorNotice,wechatErrorNotice,test,imageId
+    </sql>
+
+    <sql id="queryWhere">
+        <where>
+            <if test="conditions.size() > 0">
+                <foreach collection="conditions" index="index" item="item">
+                    ${item.prefix} ${item.field} ${item.expression} ${item.value}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="listResult" resultMap="stationResult">
+        SELECT <include refid="stationColumn"/> FROM t_station
+    </select>
+
+
+    <select id="queryListResult" resultMap="stationResult" parameterType="QueryObject">
+        SELECT <include refid="stationColumn"/> FROM t_station
+        <include refid="queryWhere"/>
+    </select>
+</mapper>
